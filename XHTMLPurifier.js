@@ -17,6 +17,7 @@ var XHTMLPurifier = (function() {
 	var active_elements = [];
 	var root;
 	var insertion_mode;
+	var noFormatting;
 
 	var scope_markers = {'td':true, 'th': true, 'caption':true};
 	var tags_with_implied_end = {'li':true, 'p':true};
@@ -47,6 +48,7 @@ var XHTMLPurifier = (function() {
 	var indent = false;
 	var indent_string = "    ";
 	var indentation = function(depth, switchOff) {
+		if (noFormatting) return "";
 		if (!indent) return "";
 		if (switchOff) indent = false;
 		var result = "\n";
@@ -944,14 +946,17 @@ var XHTMLPurifier = (function() {
 	};
 
 	return {
-		purify: function(text) {
+		purify: function(text, dontFormat) {
 			init();
 			insertion_mode = InBody;
+			noFormatting = !!dontFormat;
+
 			HTMLParser(text, {
 				start: start,
 				end: end,
 				chars: chars
 			});
+
 			return root.innerHTML().replace(/^\s+/, '');
 		}
 	};
