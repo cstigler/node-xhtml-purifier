@@ -25,7 +25,7 @@ var XHTMLPurifier = (function() {
 		// we allow it at Zaption, and it seems to be safe with all modern browsers
 		// BUT, proceed with caution.
 		'all_elements': ['class', 'style'],
-		'a': ['href', 'title', 'name', 'rel', 'rev', 'type'],
+		'a': ['href', 'target', 'title', 'name', 'rel', 'rev', 'type'],
 		'blockquote': ['cite'],
 		'img': ['src', 'alt', 'title', 'longdesc'],
 		'td': ['colspan', 'class'],
