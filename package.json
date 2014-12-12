@@ -1,0 +1,42 @@
+{
+	"name": "xhtml-purifier",
+	"version": "0.1.0",
+	"description": "Simple HTML purifier/cleaner for untrusted HTML.",
+	"keywords": [
+		"html",
+		"xhtml",
+		"purify",
+		"clean",
+		"purifier",
+		"strip",
+		"whitelist",
+		"validate"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/zaption/node-xhtml-purifier.git"
+	},
+	"bugs": {
+		"url": "http://github.com/zaption/node-xhtml-purifier/issues"
+	},
+	"author": {
+		"name": "Zaption, Inc.",
+		"email": "charlie@zaption.com",
+		"url": "http://www.zaption.com/"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://www.opensource.org/licenses/MIT"
+		}
+	],
+	"dependencies": {},
+	"devDependencies": {
+		"mocha": "*",
+		"chai": "*"
+	},
+	"engines": {
+		"node": ">= 0.8.0"
+	},
+	"readmeFilename": "README.md"
+}
