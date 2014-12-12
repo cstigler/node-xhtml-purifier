@@ -21,7 +21,10 @@ var XHTMLPurifier = (function() {
 	var scope_markers = {'td':true, 'th': true, 'caption':true};
 	var tags_with_implied_end = {'li':true, 'p':true};
 	var allowed_attributes = {
-		'all_elements': ['class'],
+		// WARNING: the original version didn't allow style attributes
+		// we allow it at Zaption, and it seems to be safe with all modern browsers
+		// BUT, proceed with caution.
+		'all_elements': ['class', 'style'],
 		'a': ['href', 'title', 'name', 'rel', 'rev', 'type'],
 		'blockquote': ['cite'],
 		'img': ['src', 'alt', 'title', 'longdesc'],
