@@ -946,16 +946,21 @@ var XHTMLPurifier = (function() {
 	};
 
 	return {
-		purify: function(text, dontFormat) {
+		purify: function(text, dontFormat, catchErrors) {
 			init();
 			insertion_mode = InBody;
 			noFormatting = !!dontFormat;
 
-			HTMLParser(text, {
-				start: start,
-				end: end,
-				chars: chars
-			});
+			// if we hit a parse error, just take whatever HTML we had
+			try {
+				HTMLParser(text, {
+					start: start,
+					end: end,
+					chars: chars
+				});
+			} catch (e) {
+				if (!catchErrors) throw e;
+			}
 
 			return root.innerHTML().replace(/^\s+/, '');
 		}
