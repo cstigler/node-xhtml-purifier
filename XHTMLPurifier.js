@@ -449,6 +449,8 @@ var XHTMLPurifier = (function() {
 					return;
 				case 'strong':
 				case 'em':
+				case 'u':
+				case 'span':
 					reconstruct_the_active_formatting_elements();
 					node = insert_html_element_for(tagName, attrs);
 					active_elements.push(node);
@@ -555,6 +557,8 @@ var XHTMLPurifier = (function() {
 				case 'a':
 				case 'em':
 				case 'strong':
+				case 'u':
+				case 'span':
 					for(var i=active_elements.length; i>0; i--) {
 						if(active_elements[i-1].name === tagName) {
 							node = active_elements[i-1];
