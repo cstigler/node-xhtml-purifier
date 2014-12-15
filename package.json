@@ -1,6 +1,6 @@
 {
 	"name": "xhtml-purifier",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": "Simple HTML purifier/cleaner for untrusted HTML.",
 	"keywords": [
 		"html",
