@@ -150,11 +150,11 @@ var XHTMLPurifier = (function() {
 			return text;
 		},
 		toString: function() {
+			if (this.isEmpty()) return '';
+
 			var string = "";
-			if (this.isEmpty()) {
-				if (selfClosing[this.name]) {
-					string = indentation(this.depth(), true) + this.selfClosingTag();
-				}
+			if (selfClosing[this.name]) {
+				string = indentation(this.depth(), true) + this.selfClosingTag();
 			} else {
 				indent = dontIndent[this.name] ? indent : true;
 				string = indentation(this.depth(), dontIndent[this.name]) + this.startTag() + this.innerHTML();
@@ -167,6 +167,12 @@ var XHTMLPurifier = (function() {
 			return this.parent ? this.parent.depth() + 1 : -1;
 		},
 		isEmpty: function() {
+			// Zaption mod: self-closing elements never count as empty
+			// otherwise <p><br/></p> gets removed entirely
+			if (selfClosing[this.name]) {
+				return false;
+			}
+
 			if (typeof(this._isEmpty) === "undefined") {
 				this._isEmpty = true;
 				for (var i=0, len=this.children.length; i<len; i++) {
@@ -465,20 +471,6 @@ var XHTMLPurifier = (function() {
 				case 'br':
 				case 'img':
 					reconstruct_the_active_formatting_elements();
-					// These conditions for BR tags are not part of the HTML5 specification
-					//   but serve to make sure we don't add BR tags to empty elements and
-					//   to make sure we create paragraphs instead of double BRs
-					if(tagName === 'br') {
-
-						if(current_node().textContent().match(/^\s*$/g)) {
-							return;
-						}
-						if(current_node().children.length && current_node().lastChild().name === 'br') {
-							current_node().removeChild(current_node().lastChild());
-							start('p');
-							return;
-						}
-					}
 					insert_html_element_for(tagName, attrs);
 					stack.pop();
 					return;
@@ -674,7 +666,7 @@ var XHTMLPurifier = (function() {
 						if (current_node().name === 'caption') {
 							var node;
 							do {
-								 node = stack.pop();
+								node = stack.pop();
 							} while(node.name !== 'caption');
 							clear_active_elements_to_last_marker();
 							insertion_mode = InTable;
