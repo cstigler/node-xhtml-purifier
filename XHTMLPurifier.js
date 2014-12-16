@@ -59,20 +59,18 @@ var XHTMLPurifier = (function() {
 	};
 
 	var TextNode = function(text) {
-		this.text = text;
+		this.text = text.replace(/\s+/g, ' ');
 	};
 
 	TextNode.prototype = {
 		isEmpty: function() {
-			return !this.text.match(/\S/);
+			return !this.text;
 		},
 		textContent: function() {
 			return this.text;
 		},
 		toString: function() {
-			return this.isEmpty() ?
-				"" :
-				indentation(this.depth(), true) + this.text.replace(/(&nbsp;)+/, ' ');
+			return this.isEmpty() ? '' : indentation(this.depth(), true) + this.text.replace(/(&nbsp;)+/, ' ');
 		},
 		depth: function() {
 			return this.parent.depth() + 1;
