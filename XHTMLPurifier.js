@@ -126,6 +126,16 @@ var XHTMLPurifier = (function() {
 				var name  = this.attributes[i].name;
 				var value = this.attributes[i].value;
 				if ((allowed_for_tag[name] || allowed_for_all[name]) && value) {
+					if (name === 'href') {
+						// don't allow links to anywhere other than http(s)
+						// because they could contain JavaScript (javascript:) or other bad things!
+						var permittedRegex = /^https?:\/\//i;
+						if (!permittedRegex.test(value)) {
+							// if not allowed, set the attribute to be empty
+							value = '';
+						}
+					}
+
 					string += " " + name + "=\"" + value + "\"";
 				}
 			}
