@@ -33,7 +33,7 @@ var XHTMLPurifier = (function() {
 		'th': ['colspan', 'class'],
 		'tr': ['rowspan', 'class'],
 		'table': ['class'],
-		'span': ['mathquill-command-id', 'mathquill-block-id', 'data-latex'], // Jialin was here
+		'span': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'contenteditable'], // Jialin was here
 		'var': ['mathquill-command-id', 'mathquill-block-id', 'data-latex'],
 		'sub': ['mathquill-command-id', 'mathquill-block-id', 'data-latex'],
 		'sup': ['mathquill-command-id', 'mathquill-block-id', 'data-latex'],
