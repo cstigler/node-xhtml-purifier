@@ -33,11 +33,11 @@ var XHTMLPurifier = (function() {
 		'th': ['colspan', 'class'],
 		'tr': ['rowspan', 'class'],
 		'table': ['class'],
-		'span': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'contenteditable'], // Jialin was here
-		'var': ['mathquill-command-id', 'mathquill-block-id', 'data-latex'],
-		'sub': ['mathquill-command-id', 'mathquill-block-id', 'data-latex'],
-		'sup': ['mathquill-command-id', 'mathquill-block-id', 'data-latex'],
-		'big': ['mathquill-command-id', 'mathquill-block-id', 'data-latex']
+		'span': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'datascale', 'contenteditable'], // Jialin was here
+		'var': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'datascale'],
+		'sub': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'datascale'],
+		'sup': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'datascale'],
+		'big': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'datascale']
 	};
 	var allowed_attributes_as_hash;
 	var selfClosing = {
