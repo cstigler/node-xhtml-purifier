@@ -32,7 +32,12 @@ var XHTMLPurifier = (function() {
 		'td': ['colspan', 'class'],
 		'th': ['colspan', 'class'],
 		'tr': ['rowspan', 'class'],
-		'table': ['class']
+		'table': ['class'],
+		'span': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'datascale', 'contenteditable'], // Jialin was here
+		'var': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'datascale'],
+		'sub': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'datascale'],
+		'sup': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'datascale'],
+		'big': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'datascale']
 	};
 	var allowed_attributes_as_hash;
 	var selfClosing = {
@@ -70,7 +75,9 @@ var XHTMLPurifier = (function() {
 			return this.text;
 		},
 		toString: function() {
-			return this.isEmpty() ? '' : indentation(this.depth(), true) + this.text.replace(/(&nbsp;)+/, ' ');
+			// WARNING: The second parameter passed to this.text.replace changed from the original
+			// ' ' to '&nbsp;'
+			return this.isEmpty() ? '' : indentation(this.depth(), true) + this.text.replace(/(&nbsp;)+/, '&nbsp;');
 		},
 		depth: function() {
 			return this.parent.depth() + 1;
@@ -467,6 +474,8 @@ var XHTMLPurifier = (function() {
 				case 'span':
 				case 'var':
 				case 'sup':
+				case 'sub':
+				case 'big':
 					reconstruct_the_active_formatting_elements();
 					node = insert_html_element_for(tagName, attrs);
 					active_elements.push(node);
@@ -563,6 +572,8 @@ var XHTMLPurifier = (function() {
 				case 'span':
 				case 'var':
 				case 'sup':
+				case 'sub':
+				case 'big':
 					for(var i=active_elements.length; i>0; i--) {
 						if(active_elements[i-1].name === tagName) {
 							node = active_elements[i-1];
