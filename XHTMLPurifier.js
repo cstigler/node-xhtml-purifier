@@ -18,6 +18,7 @@ var XHTMLPurifier = (function() {
 	var root;
 	var insertion_mode;
 	var noFormatting;
+	var noMultipleNbsp;
 
 	var scope_markers = {'td':true, 'th': true, 'caption':true};
 	var tags_with_implied_end = {'li':true, 'p':true};
@@ -77,8 +78,9 @@ var XHTMLPurifier = (function() {
 		},
 		toString: function() {
 			// WARNING: The second parameter passed to this.text.replace changed from the original
-			// ' ' to '&nbsp;'
-			return this.isEmpty() ? '' : indentation(this.depth(), true) + this.text.replace(/(&nbsp;)+/, '&nbsp;');
+			// ' ' to '&nbsp; and added a flag to remove it completly'
+			var theText = noMultipleNbsp ? this.text.replace(/(&nbsp;)+/g, '&nbsp;') : this.text;
+			return this.isEmpty() ? '' : indentation(this.depth(), true) + theText;
 		},
 		depth: function() {
 			return this.parent.depth() + 1;
@@ -966,10 +968,11 @@ var XHTMLPurifier = (function() {
 	};
 
 	return {
-		purify: function(text, dontFormat, catchErrors) {
+		purify: function(text, dontFormat, removeExtraNbsp, catchErrors) {
 			init();
 			insertion_mode = InBody;
 			noFormatting = !!dontFormat;
+			noMultipleNbsp = !!removeExtraNbsp;
 
 			// if we hit a parse error, just take whatever HTML we had
 			try {
