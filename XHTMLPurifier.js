@@ -34,11 +34,11 @@ var XHTMLPurifier = (function() {
 		'tr': ['rowspan', 'class'],
 		'table': ['class'],
 		// Jialin: the following are for Froala
-		'span': ['mathquill-command-id', 'mathquill-block-id', 'datalatex', 'datascale', 'contenteditable'],
-		'var': ['mathquill-command-id', 'mathquill-block-id', 'datalatex', 'datascale'],
-		'sub': ['mathquill-command-id', 'mathquill-block-id', 'datalatex', 'datascale'],
-		'sup': ['mathquill-command-id', 'mathquill-block-id', 'datalatex', 'datascale'],
-		'big': ['mathquill-command-id', 'mathquill-block-id', 'datalatex', 'datascale']
+		'span': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'data-scale', 'contenteditable'],
+		'var': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'data-scale'],
+		'sub': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'data-scale'],
+		'sup': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'data-scale'],
+		'big': ['mathquill-command-id', 'mathquill-block-id', 'data-latex', 'data-scale']
 	};
 	var allowed_attributes_as_hash;
 	var selfClosing = {
@@ -133,6 +133,7 @@ var XHTMLPurifier = (function() {
 			for (var i=0, len=(this.attributes || []).length; i<len; i++) {
 				var name  = this.attributes[i].name;
 				var value = this.attributes[i].value;
+
 				if ((allowed_for_tag[name] || allowed_for_all[name]) && value) {
 					if (name === 'href') {
 						// don't allow links to anywhere other than http(s)
