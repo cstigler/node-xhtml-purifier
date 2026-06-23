@@ -145,7 +145,16 @@ var XHTMLPurifier = (function() {
 						}
 					}
 
-					string += " " + name + "=\"" + value + "\"";
+					// SECURITY: HTML-entity-encode the attribute value so a value
+					// containing a double-quote (or angle brackets) cannot break out
+					// of the quoted attribute and inject additional attributes/handlers.
+					var encodedValue = String(value)
+						.replace(/&(?![a-zA-Z][a-zA-Z0-9]*;|#\d+;|#x[0-9a-fA-F]+;)/g, "&amp;")
+						.replace(/"/g, "&quot;")
+						.replace(/</g, "&lt;")
+						.replace(/>/g, "&gt;");
+
+					string += " " + name + "=\"" + encodedValue + "\"";
 				}
 			}
 			return string;
