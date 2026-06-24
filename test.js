@@ -64,4 +64,14 @@ describe('XHTMLPurifier', function() {
 						"    <tfoot>\n        <tr>\n            <td>\n                Testing\n            </td>\n        </tr>\n    </tfoot>\n</table>";
 		expect(XHTMLPurifier.purify(html)).to.equal(expected);
 	});
+
+	// security
+	it('entity-encodes attribute values to prevent attribute-injection XSS', function() {
+		var html = "<a href='http://x/' class='c\" onmouseover=\"x'>hi</a>";
+		var out = XHTMLPurifier.purify(html, true, true);
+		// the embedded double-quote must be entity-encoded, not emitted raw
+		expect(out).to.contain('&quot;');
+		// so the injected handler never becomes a live attribute
+		expect(out).to.not.match(/\son[a-z]+\s*=\s*"/i);
+	});
 });
